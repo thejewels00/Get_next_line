@@ -5,15 +5,21 @@
 
 int main()
 {
-    int fd = open("get_next_line.c", O_RDONLY);
+    int fd = open("41_no_nl", O_RDONLY);
     // int fd1 = open("test1.txt", O_RDONLY | O_CREAT);
 
-    char *buff = get_next_line(fd);
-    while (buff)
-    {
-        printf ("%s", buff);
-        free(buff);
-        buff = get_next_line(fd);
-    }
+    printf("%s", get_next_line(fd));
+   // sleep(3);
+    printf("%s", get_next_line(fd));
+
+    // printf("%s", get_next_line(fd));
+
+    //char *buff = get_next_line(fd);
+    // while (buff)
+    // {
+    //     printf ("%s", buff);
+    //     free(buff);
+    //     buff = get_next_line(fd);
+    // }
     return 0;
 }
