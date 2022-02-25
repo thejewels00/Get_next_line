@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 14:10:33 by jchennak          #+#    #+#             */
-/*   Updated: 2022/02/23 23:13:27 by jchennak         ###   ########.fr       */
+/*   Created: 2022/02/23 18:06:04 by jchennak          #+#    #+#             */
+/*   Updated: 2022/02/23 22:51:58 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1
 #endif
@@ -88,7 +88,7 @@ char	*ft_stock_return(int r_read, char **save)
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
+	static char	*save[1024];
 	char		*buff;
 	int			r_read;
 	char		*line;
@@ -102,15 +102,15 @@ char	*get_next_line(int fd)
 	while (r_read > 0)
 	{
 		buff[r_read] = '\0';
-		if (!save)
-			save = ft_strdup("");
-		line = ft_strjoin(save, buff);
-		free(save);
-		save = line;
-		if (ft_strchr(save, '\n') != NULL)
+		if (!save[fd])
+			save[fd] = ft_strdup("");
+		line = ft_strjoin(save[fd], buff);
+		free(save[fd]);
+		save[fd] = line;
+		if (ft_strchr(save[fd], '\n') != NULL)
 			break ;
 		r_read = read(fd, buff, BUFFER_SIZE);
 	}
 	free (buff);
-	return (ft_stock_return(r_read, &save));
+	return (ft_stock_return(r_read, &save[fd]));
 }
